@@ -7,7 +7,7 @@ import { Fragment, useState } from "react";
 
 function App() {
   const { theme, setTheme } = useTheme();
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
   return (
     <div
       className={`  ${
@@ -17,7 +17,7 @@ function App() {
       <div
         className={`m-auto flex h-screen w-4/5 p-4 transition-colors  duration-300 ease-in-out dark:text-white`}
       >
-        {isAuth ? (
+        {!isAuth ? (
           <AuthPage />
         ) : (
           <Fragment>
@@ -25,7 +25,6 @@ function App() {
             <Messages />
           </Fragment>
         )}
-
         <ThemeSwitcher theme={theme} setTheme={setTheme} />
       </div>
     </div>

@@ -4,7 +4,7 @@ const SearchInput = ({ children, ...props }, ref) => {
     <input
       ref={ref}
       type="text"
-      className=" rounded-md p-3 outline-none border-2 border-[#f5f0ff] w-full"
+      className=" rounded-md p-3 outline-none border-2 border-[#f5f0ff] w-full dark:text-black"
       {...props}
     >
       {children}
