@@ -6,7 +6,7 @@ import { useUserDetails } from "../../context/user-context";
 const Messages = () => {
   const { selected, messages } = useUserDetails();
   return (
-    <div className="flex w-2/3 flex-col space-y-3 border bg-slate-100">
+    <div className="flex w-2/3 flex-col space-y-3  bg-slate-100 dark:bg-slate-900 dark:shadow-lg shadow-black rounded-e-md">
       <div className="h-[10%]">
         <MessageHeader {...selected} />
       </div>

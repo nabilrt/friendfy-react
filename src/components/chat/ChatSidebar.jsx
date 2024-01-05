@@ -7,14 +7,16 @@ const ChatSidebar = () => {
   const { users, selected, setSelected } = useUserDetails();
   const [isVisible, setIsVisible] = useState(false);
   return (
-    <div className="flex  w-1/3 flex-col space-y-2 border bg-slate-50 ">
-      <div className="space-y-3 border border-solid  border-white p-4 ">
+    <div className="flex  w-1/3 flex-col space-y-2  bg-slate-50 dark:bg-slate-900 rounded-s-md">
+      <div className="h-screen space-y-3 border   border-white p-4 dark:border-black border-solid">
         <ChatTopBar isVisible={isVisible} setIsVisible={setIsVisible} />
         {users.slice(0, 3).map((user, index) => {
           return (
             <div
               className={`flex space-x-3 ${
-                user.id === selected.id ? "bg-blue-300" : "bg-white"
+                user.id === selected.id
+                  ? "bg-blue-300 dark:text-white"
+                  : "bg-white dark:bg-black dark:text-white"
               } overflow-y-auto p-4 pl-4 shadow-sm`}
               onClick={() => setSelected(user)}
               key={user.id}

@@ -15,7 +15,7 @@ const NewContactModal = ({ isVisible, setIsVisible }) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bottom-32  left-96 top-[52px] w-1/5 items-center rounded-md  border border-[#f5f0ff] bg-white p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 bottom-32  left-96 top-[52px] w-1/5 items-center rounded-md  border border-[#f5f0ff] bg-white p-4 backdrop-blur-sm dark:bg-slate-900 dark:border-black">
       <div className="flex flex-col space-y-2">
         <div className="flex items-center">
           <h1 className="mb-5 text-xl font-semibold ">All Contacts</h1>
@@ -38,7 +38,7 @@ const NewContactModal = ({ isVisible, setIsVisible }) => {
             <div
               className={`flex space-x-3 
                overflow-y-auto
-               bg-white p-4 pl-4 shadow-sm hover:bg-slate-100`}
+               bg-white p-4 pl-4 shadow-sm hover:bg-slate-100 dark:bg-black dark:hover:bg-slate-950`}
               key={user.id}
             >
               <ChatCard {...user} key={user.id} />

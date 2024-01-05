@@ -7,7 +7,7 @@ const MessageCard = ({ message }) => {
         width="40"
         className="rounded-full"
       ></img>
-      <p className="rounded-md bg-white p-2">{message}</p>
+      <p className="rounded-md bg-white dark:text-black p-2">{message}</p>
     </div>
   );
 };
