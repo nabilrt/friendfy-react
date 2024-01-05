@@ -1,13 +1,21 @@
-const MessageCard = ({ message }) => {
+const MessageCard = ({ message, me, other }) => {
   return (
     <div className="flex items-center space-x-2">
       <img
-        src="/avatar.png"
+        src={`${me._id === message.sender ? me.avatar : other.avatar}`}
         height="40"
         width="40"
         className="rounded-full"
       ></img>
-      <p className="rounded-md bg-white dark:text-black p-2">{message}</p>
+      {message.attachment ? (
+        <div>
+          <img src={message.attachment} height="100px" width="100px" />
+        </div>
+      ) : (
+        <p className="rounded-md bg-white p-2 dark:text-black">
+          {message.message}
+        </p>
+      )}
     </div>
   );
 };

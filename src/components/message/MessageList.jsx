@@ -1,5 +1,5 @@
 import MessageCard from "./MessageCard";
-const MessageList = ({ messages }) => {
+const MessageList = ({ messages, otherUser, myDetails }) => {
   return (
     <div className="flex  flex-grow flex-col space-y-3  p-4">
       <div className="flex flex-col justify-between space-y-6">
@@ -7,11 +7,15 @@ const MessageList = ({ messages }) => {
           return (
             <div
               className={`flex flex-col space-y-1 ${
-                index % 2 === 0 ? "items-end" : "items-start"
+                message.sender !== otherUser._id ? "items-end" : "items-start"
               }`}
-              key={message.id}
+              key={message._id}
             >
-              <MessageCard {...message} />
+              <MessageCard
+                message={message}
+                me={myDetails}
+                other={otherUser}
+              />
             </div>
           );
         })}

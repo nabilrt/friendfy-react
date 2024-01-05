@@ -1,13 +1,17 @@
 import { Fragment } from "react";
 
-const ChatCard = ({ avatar,name,lastMessage }) => {
-   
+const ChatCard = ({ otherUser, lastMessage }) => {
+  
   return (
     <Fragment>
-      <img src={avatar} height="50" width="50"></img>
+      <img src={otherUser.avatar} height="50" width="50"></img>
       <div className="flex flex-col space-y-2">
-        <h2 className="text-sm font-semibold">{name}</h2>
-        <p className="text-xs">{lastMessage}</p>
+        <h2 className="text-sm font-semibold">{otherUser.name}</h2>
+        {lastMessage.attachment ? (
+          <p className="text-xs">{lastMessage.sender!==otherUser._id && "You: "}Photo</p>
+        ) : (
+          <p className="text-xs">{lastMessage.sender!==otherUser._id && "You: "}{lastMessage.message}</p>
+        )}
       </div>
     </Fragment>
   );

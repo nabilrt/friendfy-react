@@ -4,10 +4,11 @@ import { useTheme } from "./context/theme-context";
 import ChatSidebar from "./components/chat/ChatSidebar";
 import Messages from "./components/message/Messages";
 import { Fragment, useState } from "react";
+import { useUserDetails } from "./context/user-context";
 
 function App() {
   const { theme, setTheme } = useTheme();
-  const [isAuth, setIsAuth] = useState(false);
+  const { isAuth } = useUserDetails();
   return (
     <div
       className={`  ${

@@ -12,7 +12,7 @@ const AuthPage = () => {
   const { theme } = useTheme();
 
   return (
-    <div className="m-auto flex h-[75%] flex-col  items-center justify-center space-y-5 rounded-md bg-slate-50 p-8 px-32 dark:bg-slate-900 shadow-lg">
+    <div className="m-auto flex  flex-col  items-center justify-center space-y-5 rounded-md bg-slate-50 p-8 px-32 dark:bg-slate-900 shadow-lg">
       <div className="flex flex-col items-center space-y-2 ">
         <img
           src={`${theme === "dark" ? "/dark-logo.png" : "/light-logo.png"}`}

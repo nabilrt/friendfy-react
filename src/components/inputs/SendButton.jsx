@@ -1,6 +1,9 @@
 const SendButton = ({ children, ...props }) => {
   return (
-    <button className="bg-emerald-400 p-3 font-semibold text-white hover:bg-emerald-600 rounded-md">
+    <button
+      className="rounded-md bg-emerald-400 p-3 font-semibold text-white hover:bg-emerald-600"
+      {...props}
+    >
       {children}
     </button>
   );
