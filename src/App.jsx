@@ -13,6 +13,8 @@ function App() {
     const auth = localStorage.getItem("user");
     if (auth) {
       setIsAuth(true);
+    } else {
+      setIsAuth(false);
     }
   }, []);
   return (

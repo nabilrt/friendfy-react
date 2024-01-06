@@ -6,9 +6,11 @@ import { useUserDetails } from "../../context/user-context";
 import { useConversations } from "../../hooks/useConversations";
 import { useUser } from "../../hooks/useUserDetails";
 import { useTheme } from "../../context/theme-context";
+import UserEditModal from "../modal/UserEditModal";
 const ChatSidebar = () => {
   const { selected, setSelected, signOut } = useUserDetails();
   const [isVisible, setIsVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { state } = useConversations();
   const { state: user } = useUser();
   const { theme } = useTheme();
@@ -50,6 +52,7 @@ const ChatSidebar = () => {
                 height="24px"
                 width="24px"
                 className="cursor-pointer"
+                onClick={() => setIsOpen(!isOpen)}
               ></img>
               <img
                 src={`${theme === "dark" ? "/logout-dark.png" : "/logout.png"}`}
@@ -63,6 +66,7 @@ const ChatSidebar = () => {
         )}
       </div>
       <NewContactModal isVisible={isVisible} setIsVisible={setIsVisible} />
+      <UserEditModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

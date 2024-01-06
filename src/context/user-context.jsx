@@ -160,6 +160,36 @@ export const UserContextProvider = ({ children }) => {
       .catch((error) => {});
   };
 
+  const updateAvatar = (data) => {
+    const { token } = getToken();
+    const url = `${import.meta.env.VITE_BACKEND_URL}/user/picture`;
+    axios
+      .post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        setIsProfileUpdated(!isProfileUpdated);
+      })
+      .catch((error) => {});
+  };
+
+  const updateUser = (data) => {
+    const { token } = getToken();
+    const url = `${import.meta.env.VITE_BACKEND_URL}/user/update`;
+    axios
+      .post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        setIsProfileUpdated(!isProfileUpdated);
+      })
+      .catch((error) => {});
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -180,6 +210,8 @@ export const UserContextProvider = ({ children }) => {
         isProfileUpdated,
         setIsProfileUpdated,
         sendAttachment,
+        updateAvatar,
+        updateUser,
       }}
     >
       {children}
