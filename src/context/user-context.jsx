@@ -63,6 +63,8 @@ export const UserContextProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(apiReducer, API_INITIAL_STATE);
 
+  const [isMessageUpdated, setIsMessageUpdated] = useState(false);
+
   const signUp = async (data) => {
     dispatch({
       type: "API_REQUEST",
@@ -147,7 +149,47 @@ export const UserContextProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(({ data }) => {})
+      .then(({ data }) => {
+        setIsMessageUpdated(!isMessageUpdated);
+      })
+      .catch((error) => {});
+  };
+
+  const checkConversation = (user) => {
+    const { token } = getToken();
+    const url = `${import.meta.env.VITE_BACKEND_URL}/conversation/participant/${user._id}`;
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        if (data.conversations.length === 0) {
+          createConversation({
+            participant1: user._id,
+          });
+        } else {
+          setSelected(data.conversations[0]);
+          setIsMessageUpdated(!isMessageUpdated);
+        }
+      })
+      .catch((error) => {});
+  };
+
+  const createConversation = (data) => {
+    const { token } = getToken();
+    const url = `${import.meta.env.VITE_BACKEND_URL}/conversation/create`;
+    axios
+      .post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        setSelected(data.conversation[0]);
+        setIsMessageUpdated(!isMessageUpdated);
+      })
       .catch((error) => {});
   };
 
@@ -167,6 +209,9 @@ export const UserContextProvider = ({ children }) => {
         isAuth,
         setIsAuth,
         sendMessage,
+        isMessageUpdated,
+        setIsMessageUpdated,
+        checkConversation,
       }}
     >
       {children}

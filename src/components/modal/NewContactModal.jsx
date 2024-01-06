@@ -4,13 +4,17 @@ import ChatCard from "../chat/ChatCard";
 import { useEffect, useRef } from "react";
 import { useUserDetails } from "../../context/user-context";
 import { useTheme } from "../../context/theme-context";
+import NewChatCard from "../chat/NewChatCard";
+import { useAllUsers } from "../../hooks/useAllUsers";
+import { useConversations } from "../../hooks/useConversations";
 
 const NewContactModal = ({ isVisible, setIsVisible }) => {
   if (!isVisible) return null;
   const inputRef = useRef(null);
 
-  const { users: contacts } = useUserDetails();
+  const { state: contacts } = useAllUsers();
   const { theme } = useTheme();
+  const { checkConversation } = useUserDetails();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -35,18 +39,23 @@ const NewContactModal = ({ isVisible, setIsVisible }) => {
             <img src="/search.png" height="25px" width="25px" />
           </SearchButton>
         </div>
-        {contacts.map((user, index) => {
-          return (
-            <div
-              className={`flex space-x-3 
+        {!contacts.loading &&
+          contacts.users.map((user, index) => {
+            return (
+              <div
+                className={`flex space-x-3 
                overflow-y-auto
                bg-white p-4 pl-4 shadow-sm hover:bg-slate-100 dark:bg-black dark:hover:bg-slate-950`}
-              key={user.id}
-            >
-              <ChatCard {...user} key={user.id} />
-            </div>
-          );
-        })}
+                key={user._id}
+                onClick={() => {
+                  checkConversation(user);
+                  setIsVisible(!isVisible);
+                }}
+              >
+                <NewChatCard {...user} key={user._id} />
+              </div>
+            );
+          })}
       </div>
     </div>
   );

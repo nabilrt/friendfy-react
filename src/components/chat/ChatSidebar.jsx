@@ -9,6 +9,11 @@ const ChatSidebar = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { state } = useConversations();
 
+  
+
+ 
+ 
+
   return (
     <div className="flex  w-1/3 flex-col space-y-2  rounded-s-md bg-slate-50 dark:bg-slate-900">
       <div className="h-screen space-y-3 border   border-solid border-white p-4 dark:border-black">
