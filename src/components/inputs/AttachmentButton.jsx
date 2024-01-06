@@ -1,10 +1,12 @@
 const AttachmentButton = ({ children, ...props }) => {
-    return (
-      <button className="bg-blue-400 p-3 font-semibold text-white hover:bg-blue-600 rounded-md">
-        {children}
-      </button>
-    );
-  };
-  
-  export default AttachmentButton;
-  
+  return (
+    <button
+      className="rounded-md bg-[#e6daff] p-3  font-semibold  hover:bg-[#d6c2ff]"
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default AttachmentButton;

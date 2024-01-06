@@ -3,12 +3,18 @@ import ThemeSwitcher from "./components/inputs/ThemeSwitcher";
 import { useTheme } from "./context/theme-context";
 import ChatSidebar from "./components/chat/ChatSidebar";
 import Messages from "./components/message/Messages";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useUserDetails } from "./context/user-context";
 
 function App() {
   const { theme, setTheme } = useTheme();
-  const { isAuth } = useUserDetails();
+  const { isAuth, setIsAuth } = useUserDetails();
+  useEffect(() => {
+    const auth = localStorage.getItem("user");
+    if (auth) {
+      setIsAuth(true);
+    }
+  }, []);
   return (
     <div
       className={`  ${

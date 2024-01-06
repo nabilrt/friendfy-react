@@ -8,7 +8,7 @@ const MessageCard = ({ message, me, other }) => {
         className="rounded-full"
       ></img>
       {message.attachment ? (
-        <div>
+        <div className="p-4 bg-[#e6daff] dark:bg-slate-800 ">
           <img src={message.attachment} height="100px" width="100px" />
         </div>
       ) : (

@@ -14,7 +14,6 @@ export const useAllUsers = () => {
   const { getToken } = useUserDetails();
   const { token } = getToken();
   const fetchAllUsers = async () => {
-    console.log("here");
     dispatch({ type: "ALL_USER_LOADING" });
     try {
       

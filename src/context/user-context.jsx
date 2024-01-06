@@ -5,65 +5,15 @@ import axios from "axios";
 export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  const users = [
-    {
-      id: 1,
-      name: "Mahim",
-      lastMessage: "Hello",
-      avatar: "/avatar.png",
-    },
-    {
-      id: 2,
-      name: "Nabil",
-      lastMessage: "Hi",
-      avatar: "/avatar.png",
-    },
-    {
-      id: 3,
-      name: "Arpita",
-      lastMessage: "Yess",
-      avatar: "/avatar.png",
-    },
-    {
-      id: 4,
-      name: "Sazin",
-      lastMessage: "No",
-      avatar: "/avatar.png",
-    },
-  ];
   const [selected, setSelected] = useState(null);
-  const messages = [
-    {
-      id: 1,
-      senderId: 1,
-      receiverId: 2,
-      message: "Hello",
-    },
-    {
-      id: 2,
-      senderId: 2,
-      receiverId: 1,
-      message: "Hi",
-    },
-    {
-      id: 3,
-      senderId: 2,
-      receiverId: 1,
-      message: "Yes",
-    },
-    {
-      id: 4,
-      senderId: 2,
-      receiverId: 1,
-      message: "Yes",
-    },
-  ];
 
   const [isAuth, setIsAuth] = useState(false);
 
   const [state, dispatch] = useReducer(apiReducer, API_INITIAL_STATE);
 
   const [isMessageUpdated, setIsMessageUpdated] = useState(false);
+
+  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
 
   const signUp = async (data) => {
     dispatch({
@@ -155,9 +105,26 @@ export const UserContextProvider = ({ children }) => {
       .catch((error) => {});
   };
 
+  const sendAttachment = (id, data) => {
+    const { token } = getToken();
+    const url = `${import.meta.env.VITE_BACKEND_URL}/conversation/upload/${id}`;
+    axios
+      .post(url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        setIsMessageUpdated(!isMessageUpdated);
+      })
+      .catch((error) => {});
+  };
+
   const checkConversation = (user) => {
     const { token } = getToken();
-    const url = `${import.meta.env.VITE_BACKEND_URL}/conversation/participant/${user._id}`;
+    const url = `${import.meta.env.VITE_BACKEND_URL}/conversation/participant/${
+      user._id
+    }`;
     axios
       .get(url, {
         headers: {
@@ -196,10 +163,8 @@ export const UserContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        users,
         selected,
         setSelected,
-        messages,
         signUp,
         signIn,
         saveToken,
@@ -212,6 +177,9 @@ export const UserContextProvider = ({ children }) => {
         isMessageUpdated,
         setIsMessageUpdated,
         checkConversation,
+        isProfileUpdated,
+        setIsProfileUpdated,
+        sendAttachment,
       }}
     >
       {children}

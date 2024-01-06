@@ -1,7 +1,12 @@
-import { useConversations } from "../../hooks/useConversations";
+import { useEffect, useRef } from "react";
 import MessageCard from "./MessageCard";
 const MessageList = ({ selected, messages }) => {
-  
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="flex  flex-grow flex-col space-y-3  p-4">
       <div className="flex flex-col justify-between space-y-6">
@@ -14,6 +19,7 @@ const MessageList = ({ selected, messages }) => {
                   : "items-start"
               }`}
               key={message._id}
+              ref={scrollRef}
             >
               <MessageCard
                 message={message}

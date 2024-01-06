@@ -35,7 +35,7 @@ export const userReducer = (state = USER_INITIAL_STATE, action) => {
 export const useUser = () => {
   const [state, dispatch] = useReducer(userReducer, USER_INITIAL_STATE);
 
-  const { getToken } = useUserDetails();
+  const { getToken, isProfileUpdated } = useUserDetails();
 
   const { token } = getToken();
 
@@ -59,6 +59,10 @@ export const useUser = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(() => {
+    getUser();
+  }, [isProfileUpdated]);
 
   return { state };
 };
