@@ -19,7 +19,7 @@ const Messages = () => {
   return (
     <div
       key={state ? "dd" : "noUser"}
-      className="flex w-2/3 flex-col space-y-3  rounded-e-md bg-slate-100 shadow-black dark:bg-slate-900 dark:shadow-lg"
+      className="flex w-2/3 flex-col space-y-3  rounded-e-lg shadow-sm bg-slate-100 shadow-slate-400 dark:bg-slate-900 dark:shadow-lg"
     >
       {selected ? (
         <Fragment>
@@ -41,8 +41,8 @@ const Messages = () => {
           </div>
         </Fragment>
       ) : (
-        <div className="flex h-full items-center justify-center">
-          Choose some one first
+        <div className="flex h-full items-center justify-center text-xl">
+          Please select a conversation first
         </div>
       )}
     </div>

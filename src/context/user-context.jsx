@@ -15,6 +15,10 @@ export const UserContextProvider = ({ children }) => {
 
   const [isProfileUpdated, setIsProfileUpdated] = useState(false);
 
+  const [authError, setAuthError] = useState("");
+
+  const [regSuccess, setRegSuccess] = useState("");
+
   const signUp = async (data) => {
     dispatch({
       type: "API_REQUEST",
@@ -35,6 +39,10 @@ export const UserContextProvider = ({ children }) => {
           type: "API_SUCCESS",
           payload: data,
         });
+        setRegSuccess(data.message);
+        setTimeout(() => {
+          setRegSuccess("");
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -67,6 +75,7 @@ export const UserContextProvider = ({ children }) => {
           type: "API_ERROR",
           payload: error,
         });
+        setAuthError(error.response.data.message);
       });
   };
 
@@ -212,6 +221,9 @@ export const UserContextProvider = ({ children }) => {
         sendAttachment,
         updateAvatar,
         updateUser,
+        authError,
+        setAuthError,
+        regSuccess,
       }}
     >
       {children}

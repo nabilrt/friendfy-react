@@ -24,7 +24,7 @@ function App() {
       } transition-colors duration-300 ease-in-out`}
     >
       <div
-        className={`m-auto flex h-screen w-4/5 p-4 transition-colors  duration-300 ease-in-out dark:text-white`}
+        className={`m-auto flex h-screen w-4/5 p-4 transition-colors  duration-300 ease-in-out dark:text-white `}
       >
         {!isAuth ? (
           <AuthPage />

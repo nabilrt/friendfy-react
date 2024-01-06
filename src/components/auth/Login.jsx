@@ -8,7 +8,7 @@ import { useTheme } from "../../context/theme-context";
 
 const Login = ({ activeTab, setActiveTab }) => {
   const [state, dispatch] = useReducer(loginReducer, LOGIN_INITIAL_STATE);
-  const { state: data, signIn, getToken, setIsAuth } = useUserDetails();
+  const { state: data, signIn, authError, setAuthError } = useUserDetails();
   const { theme } = useTheme();
 
   const handleInputs = async () => {
@@ -20,6 +20,7 @@ const Login = ({ activeTab, setActiveTab }) => {
         placeholder="Email"
         type="text"
         name="email"
+        onFocus={() => setAuthError("")}
         value={state.email}
         onChange={(e) => {
           dispatch({
@@ -32,6 +33,7 @@ const Login = ({ activeTab, setActiveTab }) => {
       <PasswordInput
         placeholder="Password"
         name="password"
+        onFocus={() => setAuthError("")}
         value={state.password}
         onChange={(e) => {
           dispatch({
@@ -41,7 +43,12 @@ const Login = ({ activeTab, setActiveTab }) => {
         }}
       />
 
-      <SignInButton className="uppercase" type="button" onClick={handleInputs}>
+      <SignInButton
+        className="uppercase"
+        type="button"
+        onClick={handleInputs}
+        disabled={state.email === "" || state.password === ""}
+      >
         {data.loading && (
           <span>
             <img
@@ -54,6 +61,7 @@ const Login = ({ activeTab, setActiveTab }) => {
         )}
         Sign In
       </SignInButton>
+      {authError && <p className="text-sm text-red-500">{authError}</p>}
     </Fragment>
   );
 };

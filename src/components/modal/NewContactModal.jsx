@@ -1,12 +1,10 @@
 import SearchButton from "../inputs/SearchButton";
 import SearchInput from "../inputs/SearchInput";
-import ChatCard from "../chat/ChatCard";
 import { useEffect, useRef } from "react";
 import { useUserDetails } from "../../context/user-context";
 import { useTheme } from "../../context/theme-context";
 import NewChatCard from "../chat/NewChatCard";
 import { useAllUsers } from "../../hooks/useAllUsers";
-import { useConversations } from "../../hooks/useConversations";
 
 const NewContactModal = ({ isVisible, setIsVisible }) => {
   if (!isVisible) return null;

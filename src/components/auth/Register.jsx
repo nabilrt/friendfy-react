@@ -1,4 +1,4 @@
-import { Fragment, useReducer } from "react";
+import { Fragment, useReducer, useState } from "react";
 import AuthInputs from "../inputs/AuthInputs";
 import SignUpButton from "../inputs/SignUpButton";
 import PasswordInput from "../inputs/PasswordInput";
@@ -7,16 +7,30 @@ import {
   REGISTER_INITIAL_STATE,
 } from "../../reducers/registerReducer";
 import { useUserDetails } from "../../context/user-context";
+import SignUpValidator from "../../validator/RegisterValidator";
 
 const Register = ({ activeTab, setActiveTab }) => {
   const [state, dispatch] = useReducer(registerReducer, REGISTER_INITIAL_STATE);
-  const { signUp } = useUserDetails();
+  const { signUp, regSuccess } = useUserDetails();
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleInputs = () => {
-    if (state.password === state.confirmPassword) {
-      signUp(state);
+  const handleInputs = async () => {
+    const err = SignUpValidator(state);
+    if (
+      err.name !== "" ||
+      err.email !== "" ||
+      err.password !== "" ||
+      err.confirmPassword !== ""
+    ) {
+      setErrors(err);
     } else {
-      alert("Passwords do not match");
+      await signUp(state);
+      setActiveTab("login");
     }
   };
 
@@ -27,6 +41,7 @@ const Register = ({ activeTab, setActiveTab }) => {
         type="text"
         name="name"
         value={state.name}
+        onFocus={() => errors.name && setErrors({ ...errors, name: "" })}
         onChange={(e) => {
           dispatch({
             type: "INPUT_CHANGE",
@@ -34,11 +49,15 @@ const Register = ({ activeTab, setActiveTab }) => {
           });
         }}
       />
+      {errors.name !== "" && (
+        <p className="-mb-6 text-sm text-red-500">{errors.name}</p>
+      )}
       <AuthInputs
         placeholder="Email"
         type="text"
         name="email"
         value={state.email}
+        onFocus={() => errors.email && setErrors({ ...errors, email: "" })}
         onChange={(e) => {
           dispatch({
             type: "INPUT_CHANGE",
@@ -46,11 +65,17 @@ const Register = ({ activeTab, setActiveTab }) => {
           });
         }}
       />
+      {errors.email !== "" && (
+        <p className="-mt-6 text-sm text-red-500">{errors.email}</p>
+      )}
 
       <PasswordInput
         placeholder="Password"
         name="password"
         value={state.password}
+        onFocus={() =>
+          errors.password && setErrors({ ...errors, password: "" })
+        }
         onChange={(e) => {
           dispatch({
             type: "INPUT_CHANGE",
@@ -58,10 +83,17 @@ const Register = ({ activeTab, setActiveTab }) => {
           });
         }}
       />
+      {errors.password !== "" && (
+        <p className="-mt-6 text-sm text-red-500">{errors.password}</p>
+      )}
       <PasswordInput
         placeholder="Confirm Password"
         name="confirmPassword"
         value={state.confirmPassword}
+        onFocus={() =>
+          errors.confirmPassword &&
+          setErrors({ ...errors, confirmPassword: "" })
+        }
         onChange={(e) => {
           dispatch({
             type: "INPUT_CHANGE",
@@ -69,6 +101,11 @@ const Register = ({ activeTab, setActiveTab }) => {
           });
         }}
       />
+      {errors.confirmPassword !== "" && (
+        <span className="-mt-6 text-sm text-red-500">
+          {errors.confirmPassword}
+        </span>
+      )}
       <AuthInputs
         type="file"
         name="profilePicture"
@@ -83,6 +120,7 @@ const Register = ({ activeTab, setActiveTab }) => {
       <SignUpButton className="uppercase" type="button" onClick={handleInputs}>
         Register
       </SignUpButton>
+      {regSuccess && <p className="text-sm text-green-500">{regSuccess}</p>}
     </Fragment>
   );
 };

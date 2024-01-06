@@ -7,6 +7,7 @@ import { useConversations } from "../../hooks/useConversations";
 import { useUser } from "../../hooks/useUserDetails";
 import { useTheme } from "../../context/theme-context";
 import UserEditModal from "../modal/UserEditModal";
+import ChatProfile from "./ChatProfile";
 const ChatSidebar = () => {
   const { selected, setSelected, signOut } = useUserDetails();
   const [isVisible, setIsVisible] = useState(false);
@@ -16,8 +17,8 @@ const ChatSidebar = () => {
   const { theme } = useTheme();
 
   return (
-    <div className="flex  w-1/3 flex-col space-y-2  rounded-s-md bg-slate-50 dark:bg-slate-900">
-      <div className="h-screen space-y-3 border   border-solid border-white p-4 dark:border-black">
+    <div className="flex  w-1/3 flex-col space-y-2 rounded-s-lg shadow-sm  shadow-slate-400 dark:shadow-slate-800 bg-slate-50 dark:bg-slate-900">
+      <div className="h-screen space-y-3 border rounded-s-lg shadow-sm shadow-slate-400  dark:shadow-slate-800 border-white p-4 dark:border-slate-800">
         <ChatTopBar isVisible={isVisible} setIsVisible={setIsVisible} />
         {state.conversations.map((user, index) => {
           return (
@@ -35,34 +36,12 @@ const ChatSidebar = () => {
           );
         })}
         {!user.loading && !user.error && (
-          <div className="fixed bottom-5 m-auto flex w-[24.5%]  space-x-3 bg-[#e6daff] p-4 dark:bg-slate-800">
-            <div className="mr-auto flex items-center space-x-3">
-              <img
-                src={user.user.avatar}
-                height="40px"
-                width="40px"
-                className="inline rounded-full "
-              />
-              <p>{user.user.name}</p>
-            </div>
-
-            <div className="mb-2 flex items-center space-x-4">
-              <img
-                src={`${theme === "dark" ? "/edit-dark.png" : "edit.png"}`}
-                height="24px"
-                width="24px"
-                className="cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
-              ></img>
-              <img
-                src={`${theme === "dark" ? "/logout-dark.png" : "/logout.png"}`}
-                className="cursor-pointer "
-                height="24px"
-                width="24px"
-                onClick={() => signOut()}
-              />
-            </div>
-          </div>
+          <ChatProfile
+            {...user.user}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            signOut={signOut}
+          />
         )}
       </div>
       <NewContactModal isVisible={isVisible} setIsVisible={setIsVisible} />
