@@ -1,4 +1,6 @@
+
 const ChatCard = ({ _id, otherUser, lastMessage }) => {
+  
   return (
     <div className="flex w-full  space-x-3">
       <div className="mr-auto flex items-center space-x-3">
@@ -18,9 +20,8 @@ const ChatCard = ({ _id, otherUser, lastMessage }) => {
           )}
         </div>
       </div>
-      <div className="ml-auto mt-3 items-center ">
-        <img src="/delete.png" className="cursor-pointer" />
-      </div>
+     
+    
     </div>
   );
 };
